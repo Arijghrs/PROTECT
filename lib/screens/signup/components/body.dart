@@ -10,6 +10,8 @@ import 'package:protect/screens/signup/components/background.dart';
 import 'package:protect/screens/signup/components/or_divider.dart';
 import 'package:protect/screens/signup/components/social_icon.dart';
 
+
+
 class Body extends StatelessWidget {
   final Widget child;
 

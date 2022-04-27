@@ -2,6 +2,7 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:protect/constants.dart';
+import 'package:protect/screens/On-boarding/On-boarding1.dart';
 import 'package:protect/screens/Welcome_screen/Welcome.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -33,7 +34,7 @@ class SplashScreen extends StatelessWidget {
           ],
         ),
         backgroundColor: kPrimaryColor,
-        nextScreen: WelcomePage(),
+        nextScreen: OnBoardingPage(),
       splashIconSize: 250,
       duration: 3000,
       splashTransition: SplashTransition.sizeTransition,

@@ -3,8 +3,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:protect/screens/login/LoginScreen.dart';
 import 'package:protect/constants.dart';
 
+import 'screens/On-boarding/On-boarding1.dart';
 import 'screens/Splash_page/Splash_screen.dart';
 import 'screens/Welcome_screen/Welcome.dart';
+import 'screens/settings/settings_screen.dart';
 import 'screens/signup/signup_screen.dart';
 
 void main() {
@@ -22,7 +24,7 @@ class MyApp extends StatelessWidget {
         primaryColor: kPrimaryColor,
         textTheme: GoogleFonts.robotoTextTheme(Theme.of(context).textTheme)
       ),
-      home: SplashScreen(),
+      home: SettingsScreen(),
       /*routes: {
         'Login': (context) => SignUpScreen(),
       }*/

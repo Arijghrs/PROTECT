@@ -31,15 +31,50 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
         ),
       ),
-     /* body: Container(
-        //padding: EdgeInsets.only((left: 16, top: 25, right: 16)),
-        child: ListView(
-          Divider(),
-          Row(children: [
+      body: Column(
+        children: <Widget>[
+          SizedBox(height: 100,),
+          //header,
+          Expanded(
+              child: ListView(
+                children: <Widget>[
+                  ProfileListeItem(
+                    icon: Icons.access_time,
+                    text: 'Time zone' ,
+                  ),
+                ],
+              ),
+          ),
+        ],
+      ),
+    );
+  }
+}
 
-          ],)
-        ),
-      ),*/
+
+class ProfileListeItem extends StatelessWidget {
+  final IconData icon;
+  final text;
+  //final bool hasNavigation;
+
+  const ProfileListeItem({
+    Key? key,
+    this.text,
+    required this.icon,
+    //required this.hasNavigation,
+}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 60,
+      margin: EdgeInsets.symmetric(
+        horizontal: 20,
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(30),
+        color: Color(0xFF7C9BAC),
+      ),
     );
   }
 }

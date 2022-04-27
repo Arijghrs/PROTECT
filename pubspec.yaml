@@ -34,23 +34,17 @@ dependencies:
   curved_navigation_bar: ^0.3.4
   animated_splash_screen: ^1.1.0
   flutter_map: ^0.12.0
+  introduction_screen: ^1.0.9
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
+
   flutter_lints: ^1.0.0
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
 
-# The following section is specific to Flutter.
 flutter:
 
   # The following line ensures that the Material Icons font is
@@ -66,8 +60,11 @@ flutter:
     - assets/images/googleclr.svg
     - assets/images/twitter2.svg
     - assets/images/facebook2.svg
-    - assets/images/map.jpg
     - assets/images/location.svg
+    - assets/images/kids.svg
+    - assets/images/Paper map-pana.svg
+    - assets/images/undraw_play_time_7k7b.png
+    - assets/images/undraw_back_to_school_inwc.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
