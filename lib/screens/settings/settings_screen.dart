@@ -33,7 +33,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       body: Column(
         children: <Widget>[
-          SizedBox(height: 100,),
+          SizedBox(height: 80,),
           //header,
           Expanded(
               child: ListView(
@@ -42,6 +42,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     icon: Icons.access_time,
                     text: 'Time zone' ,
                   ),
+                   SizedBox(height: 20,),
+                   ProfileListeItem(
+                     icon: Icons.location_on,
+                     text: 'location update '),
+                  SizedBox(height: 20,),
+                  ProfileListeItem(
+                    icon: Icons.settings_sharp,
+                    text: 'switch settings' ,),
+                  SizedBox(height: 20,),
+                  ProfileListeItem(
+                    icon: Icons.watch_outlined,
+                    text: 'choose a watch ' ,),
                 ],
               ),
           ),
@@ -71,9 +83,36 @@ class ProfileListeItem extends StatelessWidget {
       margin: EdgeInsets.symmetric(
         horizontal: 20,
       ),
+      padding: EdgeInsets.symmetric(horizontal: 20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
-        color: Color(0xFF7C9BAC),
+        color: Color(0xFFE8EFF3),
+      ),
+      child: Row(
+        children: <Widget>[
+          //SizedBox(width: 20,),
+          Icon(
+            this.icon,
+            size: 30,
+            //color: Color(0xFF615E5E),
+            color: kPrimaryColor,
+          ),
+          SizedBox(height: 40,width: 20,),
+          Text(
+            this.text,
+            style: TextStyle(
+                fontSize:20,
+                fontWeight: FontWeight.w500,
+                color: Color(0xFF615E5E)
+            ),
+          ),
+          Spacer(),
+          Icon(
+            Icons.arrow_forward_ios,
+            size: 20,
+            color: Color(0xFF615E5E),
+          ),
+        ],
       ),
     );
   }

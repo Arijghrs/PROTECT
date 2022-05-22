@@ -3,17 +3,25 @@ import 'package:protect/constants.dart';
 import 'package:protect/components/input_container.dart';
 
 class RoundedPasswordInput extends StatelessWidget {
-  const RoundedPasswordInput({
+  RoundedPasswordInput({
     Key? key,
     required this.hint
   }) : super(key: key);
 
 final String hint;
-
+TextEditingController _passwordController =TextEditingController();
   @override
   Widget build( context) {
     return InputContainer(
-        child: TextField(
+        child: TextFormField(
+          controller: _passwordController,
+          validator:  (value) {
+          if (value != null && value.isEmpty) {
+          return "password can't be empty";
+         }
+
+         return null;
+        } ,
           cursorColor: kPrimaryColor,
           obscureText: true,
           decoration: InputDecoration(

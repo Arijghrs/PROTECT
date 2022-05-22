@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:protect/AuthenticationService.dart';
 import 'package:protect/components/already_have_an_account.dart';
 import 'package:protect/components/rounded_button.dart';
 import 'package:protect/constants.dart';
@@ -12,10 +14,17 @@ import 'package:protect/screens/signup/signup_screen.dart';
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
+
+
 }
 
 class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStateMixin{
   bool isLogin = true ;
+
+  final _formkey=GlobalKey<FormState>();
+  final AuthenticationService _auth =AuthenticationService();
+
+
 
   @override
   Widget build(BuildContext context){
@@ -28,6 +37,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
 
     return Scaffold(
       body: Stack(
+        key:_formkey,
         children: [
 
           //Login form
@@ -104,8 +114,11 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
         ],
       ),
     );
+
   }
 }
+
+
 
 
 

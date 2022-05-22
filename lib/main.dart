@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:protect/screens/login/LoginScreen.dart';
@@ -9,7 +10,8 @@ import 'screens/Welcome_screen/Welcome.dart';
 import 'screens/settings/settings_screen.dart';
 import 'screens/signup/signup_screen.dart';
 
-void main() {
+void main() async{
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -24,10 +26,7 @@ class MyApp extends StatelessWidget {
         primaryColor: kPrimaryColor,
         textTheme: GoogleFonts.robotoTextTheme(Theme.of(context).textTheme)
       ),
-      home: SettingsScreen(),
-      /*routes: {
-        'Login': (context) => SignUpScreen(),
-      }*/
+      home: SplashScreen(),
     );
   }
 }
