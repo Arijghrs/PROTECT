@@ -1,123 +1,222 @@
 
 import 'package:flutter/material.dart';
-import 'package:protect/components/already_have_an_account.dart';
-import 'package:protect/components/rounded_button.dart';
-import 'package:protect/constants.dart';
-import 'package:protect/components/rounded_input.dart';
-import 'package:protect/components/rounded_password_input.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:protect/screens/Navigation_bar/Nav_Bar.dart';
-import 'package:protect/screens/home_page/home_screen.dart';
-import 'package:protect/screens/signup/signup_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class LoginScreen extends StatefulWidget {
+import '../../components/already_have_an_account.dart';
+import '../../constants.dart';
+import '../home_page/home_screen.dart';
+import '../signup/signup_screen.dart';
+
+
+
+class login extends StatefulWidget {
   @override
-  _LoginScreenState createState() => _LoginScreenState();
-
-
+  _loginState createState() => _loginState();
 }
+class _loginState extends State<login> {
+  void initState() {
+    super.initState();
+  }
 
-class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStateMixin{
-  bool isLogin = true ;
 
+  final _formkey = GlobalKey<FormState>();
 
+  TextEditingController _emailcontroller = TextEditingController();
 
+  TextEditingController _passwordcontroller = TextEditingController();
 
   @override
-  Widget build(BuildContext context){
-    Size size = MediaQuery.of(context).size;
+  void dispose() {
+    _emailcontroller.dispose();
 
-    double viewInset = MediaQuery.of(context).viewInsets.bottom;
-    double defaultLoginSize = size.height - (size.height * 0.2);
-    double defaultRegisterSize = size.height - (size.height * 0.1);
+    _passwordcontroller.dispose();
+
+    super.dispose();
+  }
 
 
+// Scaffold
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-
-        children: [
-
-          //Login form
-          Align(
-            alignment: Alignment.center,
-            child: SingleChildScrollView(
-              child:Container(
-                width: size.width,
-                height: defaultLoginSize,
-
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-
-                  children: [
-                    Text(
-                      'Login',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30,
-                        color: kPrimaryColor,
-                      ),
+      body: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle.light,
+        child: Form(
+          key: _formkey,
+          child: Stack(
+            children: <Widget>[
+              Container(
+                  height: double.infinity,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Color(0xFFE5E5E5),
+                            Color(0xFFE5E5E5),
+                            Color(0xFFE5E5E5),
+                            Color(0xFFE5E5E5),
+                          ]
+                      )
+                  ),
+                  child: SingleChildScrollView(
+                    physics: AlwaysScrollableScrollPhysics(),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 25,
+                      vertical: 120,
                     ),
 
-                    SizedBox(height: 0.1),
-
-
-                    SvgPicture.asset('assets/images/login.svg',
-                    width: 250,
-                    height: 250,
-                    ),
-
-                    SizedBox(height: 5),
-
-                    RoundedInput(icon: Icons.mail, hint: 'Username'),
-
-                    RoundedPasswordInput(hint: 'Passwoord'),
-
-                    SizedBox(height: 5),
-
-                    RoundedButton(
-                      title: 'LOGIN',
-                      press: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context){
-                                  return Navbar();
-                             },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          'Login',
+                          style: TextStyle(
+                            color: kPrimaryColor,
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 0.1,),
+                        SvgPicture.asset('assets/images/login.svg',
+                          width: 250,
+                          height: 250,
+                        ),
+                        SizedBox(height: 10,),
+                        Container(
+                          width: 320,
+                          alignment: Alignment.centerLeft,
+                          decoration: BoxDecoration(
+                              color: Color(0xFFd1dfe9),
+                              borderRadius: BorderRadius.circular(25),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.black26,
+                                    blurRadius: 6,
+                                    offset: Offset(0, 2)
+                                )
+                              ]
+                          ),
+                          height: 60,
+                          child: TextFormField(
+                            controller: _emailcontroller,
+                            keyboardType: TextInputType.emailAddress,
+                            cursorColor: kPrimaryColor,
+                            decoration: InputDecoration(
+                                contentPadding: EdgeInsets.only(top: 14),
+                                prefixIcon: Icon(
+                                    Icons.email, color: kPrimaryColor),
+                                hintText: 'Email',
+                                border: InputBorder.none
                             ),
-                        );
-                      },
-                    ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please Fill Email Input';
+                              }
+                            },
+                          ),
+                        ),
+                        SizedBox(height: 20,),
+                        Container(
+                          width: 320,
+                          alignment: Alignment.centerLeft,
+                          decoration: BoxDecoration(
+                              color: Color(0xFFd1dfe9),
+                              borderRadius: BorderRadius.circular(25),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.black26,
+                                    blurRadius: 6,
+                                    offset: Offset(0, 2)
+                                )
+                              ]
+                          ),
+                          height: 60,
+                          child: TextFormField(
+                            obscureText: true,
+                            controller: _passwordcontroller,
+                            keyboardType: TextInputType.visiblePassword,
+                            cursorColor: kPrimaryColor,
+                            decoration: InputDecoration(
 
-                    SizedBox(height: 20),
+                              contentPadding: EdgeInsets.only(top: 14),
+                              prefixIcon: Icon(
+                                  Icons.lock, color: kPrimaryColor),
+                              hintText: 'Password',
+                              border: InputBorder.none,
+                            ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please Fill Password Input';
+                              }
+                            },
+                          ),
+                        ),
+                        SizedBox(height: 20,),
+                        SizedBox(
+                          height: 50,
+                          width: 320,
+                          child: ElevatedButton(
+                            child:
+                            Text("Login", style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white),),
+                            style: ElevatedButton.styleFrom(
+                                shape:
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30.0),
+                                    side: BorderSide(color: Color(0xff2970A5))),
+                                primary: Color(0xff2970A5),
+                                padding: EdgeInsets.all(6.0)),
+                            onPressed: () async {
+                              if (_formkey.currentState!.validate()) {
+                                var result = await FirebaseAuth.instance
+                                    .signInWithEmailAndPassword(
+                                    email: _emailcontroller.text,
+                                    password: _passwordcontroller.text);
 
-                    AlreadyHaveAnAccountCheck(
-                        press: () {
-                          Navigator.push(
+                                if (result != null) {
+                                  // pushReplacement
+
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => HomePage()),
+                                  );
+                                } else {
+                                  print('user not found');
+                                }
+                              }
+                            },
+                          ),
+                        ),
+                        SizedBox(height: 20),
+
+                        AlreadyHaveAnAccountCheck(
+                          press: () {
+                            Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context){
-                                    return SignUpScreen();
-                                  },
+                                builder: (context) {
+                                  return signup();
+                                },
                               ),
-                          );
-                        },
+                            );
+                          },
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  )
               ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
-
   }
 }
-
-
-
-
-
-
-

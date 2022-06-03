@@ -37,7 +37,7 @@ class _NavbarState extends State<Navbar> {
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'home'),
           BottomNavigationBarItem(icon: Icon(Icons.notifications), label: 'notification'),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'settings'),
+          BottomNavigationBarItem(icon: Icon(Icons.monitor_heart), label: 'settings'),
           BottomNavigationBarItem(
               icon: CircleAvatar(
                 radius: 14,
