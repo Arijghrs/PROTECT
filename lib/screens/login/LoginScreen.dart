@@ -4,9 +4,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 import '../../components/already_have_an_account.dart';
 import '../../constants.dart';
+import '../Navigation_bar/Nav_Bar.dart';
 import '../home_page/home_screen.dart';
 import '../signup/signup_screen.dart';
 
@@ -23,6 +26,8 @@ class _loginState extends State<login> {
 
 
   final _formkey = GlobalKey<FormState>();
+
+  TextEditingController _resetemailcontroller= TextEditingController();
 
   TextEditingController _emailcontroller = TextEditingController();
 
@@ -57,10 +62,8 @@ class _loginState extends State<login> {
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
                           colors: [
-                            Color(0xFFE5E5E5),
-                            Color(0xFFE5E5E5),
-                            Color(0xFFE5E5E5),
-                            Color(0xFFE5E5E5),
+                            Color(0xFF003973),
+                            Color(0xFFE5E5BE),
                           ]
                       )
                   ),
@@ -77,7 +80,7 @@ class _loginState extends State<login> {
                         Text(
                           'Login',
                           style: TextStyle(
-                            color: kPrimaryColor,
+                            color: kBackgroundColor,
                             fontSize: 30,
                             fontWeight: FontWeight.bold,
                           ),
@@ -175,23 +178,24 @@ class _loginState extends State<login> {
                                 padding: EdgeInsets.all(6.0)),
                             onPressed: () async {
                               if (_formkey.currentState!.validate()) {
-                                var result = await FirebaseAuth.instance
-                                    .signInWithEmailAndPassword(
-                                    email: _emailcontroller.text,
-                                    password: _passwordcontroller.text);
-
-                                if (result != null) {
-                                  // pushReplacement
-
-                                  Navigator.pushReplacement(
+                             FirebaseAuth.instance
+                                        .signInWithEmailAndPassword(
+                                   email: _emailcontroller.text,
+                                        password: _passwordcontroller.text)
+                                  .then((value) {
+                                   Navigator.push(context,
+                                   MaterialPageRoute(builder: (context) => Navbar()));
+                                         }).onError((error, stackTrace) {
+                                   showTopSnackBar(
                                     context,
-                                    MaterialPageRoute(
-                                        builder: (context) => HomePage()),
-                                  );
-                                } else {
-                                  print('user not found');
-                                }
-                              }
+                                     CustomSnackBar.error(
+                                      message:
+                                      "error${error.toString()}",
+                                 ),
+                               );
+                                       });
+                                     }
+
                             },
                           ),
                         ),
@@ -209,6 +213,41 @@ class _loginState extends State<login> {
                             );
                           },
                         ),
+                        Text("Forgot password?",
+                          style: TextStyle(color: kPrimaryColor),
+                        ),
+                        GestureDetector(
+                          onTap: (){
+                            showDialog(
+                                context: context,
+                                builder:(BuildContext context){
+                                  return AlertDialog(
+                                    title:Text('Reset password'),
+                                    content: TextFormField(
+                                      decoration: InputDecoration(hintText: 'Email'),
+                                      controller: _resetemailcontroller,
+                                    ),
+                                    actions: [
+                                      TextButton(onPressed:()async{
+                                        await FirebaseAuth.instance.sendPasswordResetEmail(email:_resetemailcontroller.text.trim());
+                                        Navigator.of(context).pop();
+                                      }, child: Text('Submit') ),
+                                      TextButton(
+                                          onPressed: (){
+                                            Navigator.of(context).pop();
+                                          }, child: Text('Close'))
+                                    ],
+                                  );
+                                });
+                          } ,
+                          child: Text(
+                           "Reset Password",
+                            style: TextStyle(
+                              color: kPrimaryColor,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        )
                       ],
                     ),
                   )

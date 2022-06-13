@@ -5,45 +5,59 @@ import 'package:protect/screens/notification/notification_screen.dart';
 import 'package:protect/screens/profile/profile_screen.dart';
 import 'package:protect/screens/settings/settings_screen.dart';
 
+import '../heart_rate/heart_rate_screen.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+
 class Navbar extends StatefulWidget {
   @override
   _NavbarState createState() => _NavbarState();
 }
 
 class _NavbarState extends State<Navbar> {
-  int pageIndex = 0;
-  List<Widget> pageList = <Widget>[
-    HomePage(),
-    NotificationScreen(),
-    SettingsScreen(),
-    ProfileScreen(),
-  ];
-
+  int _page = 0;
+  GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: pageList[pageIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: pageIndex,
-        onTap: (value) {
-          setState(() {
-            pageIndex = value;
-          });
-        },
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.white,
-        selectedItemColor: kPrimaryColor,
-        unselectedItemColor: Colors.grey,
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'home'),
-          BottomNavigationBarItem(icon: Icon(Icons.notifications), label: 'notification'),
-          BottomNavigationBarItem(icon: Icon(Icons.monitor_heart), label: 'settings'),
-          BottomNavigationBarItem(
-              icon: CircleAvatar(
-                radius: 14,
-                backgroundImage: AssetImage('assets/images/avatar.png'),
-              ),
-              label: 'profile'),
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: [
+              HomePage(),
+              HeartRate(),
+              ProfileScreen(),
+            ].elementAt(_page),
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: CurvedNavigationBar(
+              height: 55,
+              color: NavColor,
+              backgroundColor: Colors.transparent,
+              buttonBackgroundColor: Colors.white,
+              key: _bottomNavigationKey,
+              items: <Widget>[
+                Icon(Icons.home, size: 30),
+                new Tab(
+                  icon: CircleAvatar(
+                    radius: 16,
+                    backgroundImage: NetworkImage(
+                        'https://img.icons8.com/material/2x/activity.gif'),
+                  ),
+                ),
+                Icon(Icons.account_circle, size: 30),
+              ],
+              onTap: (index) {
+                setState(() {
+                  _page = index;
+                });
+              },
+            ),
+          )
         ],
       ),
     );

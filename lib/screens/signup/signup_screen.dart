@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 
 import '../../constants.dart';
@@ -26,6 +30,7 @@ class _signup extends State<signup> {
     return Scaffold(
         body: AnnotatedRegion<SystemUiOverlayStyle>(
             value: SystemUiOverlayStyle.light,
+            key: _formKey,
             child: Stack(
                 children: [
                   Container(
@@ -36,10 +41,8 @@ class _signup extends State<signup> {
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                             colors: [
-                              Color(0xFFE5E5E5),
-                              Color(0xFFE5E5E5),
-                              Color(0xFFE5E5E5),
-                              Color(0xFFE5E5E5),
+                              Color(0xFF003973),
+                              Color(0xFFE5E5BE),
                             ]
                         )
                     ),
@@ -55,94 +58,120 @@ class _signup extends State<signup> {
                             Text(
                               'SignUp',
                               style: TextStyle(
-                                color: kPrimaryColor,
+                                color: kBackgroundColor,
                                 fontSize: 30,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             SizedBox(height: 40,),
+                            SvgPicture.asset('assets/images/signup.svg',
+                              width: 150,
+                              height: 150,
+                            ),
+                            SizedBox(height: 20,),
                             SizedBox(height:0.1,),
                             Container(
                               width: 320,
                               alignment: Alignment.centerLeft,
                               decoration: BoxDecoration(
-                                color: Color(0xFFd1dfe9),
-                                borderRadius: BorderRadius.circular(30),
+                                  color: Color(0xFFd1dfe9),
+                                  borderRadius: BorderRadius.circular(25),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Colors.black26,
+                                        blurRadius: 6,
+                                        offset: Offset(0, 2)
+                                    )
+                                  ]
                               ),
-                              child: Column(
-                                children: [
-                                  TextFormField(
-                                    controller: _namecontroller,
-                                    decoration: InputDecoration(
-                                        labelText: 'name',
-                                        labelStyle: TextStyle(
-                                            color:Colors.black
-                                        )
-                                    ),
-                                    validator: (value){
-                                      if(value!.isEmpty){
-                                        return 'Please Fill name Input';
-                                      }
-                                    },
-                                  )
-                                ],
+                              height: 60,
+                              child: TextFormField(
+                                controller: _namecontroller,
+                                cursorColor: kPrimaryColor,
+                                decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.only(top: 14),
+                                    prefixIcon: Icon(
+                                        Icons.account_circle, color: kPrimaryColor),
+                                    hintText: 'Name',
+                                    border: InputBorder.none
+                                ),
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return 'Please Fill Email Input';
+                                  }
+                                },
                               ),
                             ),
-                            SizedBox(height: 40,),
+                            SizedBox(height: 15,),
                             SizedBox(height:0.1,),
                             Container(
                               width: 320,
                               alignment: Alignment.centerLeft,
                               decoration: BoxDecoration(
-                                color: Color(0xFFd1dfe9),
-                                borderRadius: BorderRadius.circular(30),
+                                  color: Color(0xFFd1dfe9),
+                                  borderRadius: BorderRadius.circular(25),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Colors.black26,
+                                        blurRadius: 6,
+                                        offset: Offset(0, 2)
+                                    )
+                                  ]
                               ),
-                              child: Column(
-                                children: [
-                                  TextFormField(
-                                    controller: _emailcontroller,
-                                    decoration: InputDecoration(
-                                        labelText: 'Email',
-                                        labelStyle: TextStyle(
-                                            color:Colors.black
-                                        )
-                                    ),
-                                    validator: (value){
-                                      if(value!.isEmpty){
-                                        return 'Please Fill Email ';
-                                      }
-                                    },
-                                  )
-                                ],
+                              height: 60,
+                              child: TextFormField(
+                                controller: _emailcontroller,
+                                keyboardType: TextInputType.emailAddress,
+                                cursorColor: kPrimaryColor,
+                                decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.only(top: 14),
+                                    prefixIcon: Icon(
+                                        Icons.email, color: kPrimaryColor),
+                                    hintText: 'Email',
+                                    border: InputBorder.none
+                                ),
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return 'Please Fill Email Input';
+                                  }
+                                },
                               ),
                             ),
-                            SizedBox(height: 40,),
+                            SizedBox(height: 15,),
                             SizedBox(height: 0.1,),
                             Container(
                               width: 320,
                               alignment: Alignment.centerLeft,
                               decoration: BoxDecoration(
-                                color: Color(0xFFd1dfe9),
-                                borderRadius: BorderRadius.circular(25),
+                                  color: Color(0xFFd1dfe9),
+                                  borderRadius: BorderRadius.circular(25),
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: Colors.black26,
+                                        blurRadius: 6,
+                                        offset: Offset(0, 2)
+                                    )
+                                  ]
                               ),
-                              child: Column(
-                                children: [
-                                  TextFormField(
-                                    obscureText: true,
-                                    controller: _passwordcontroller,
-                                    decoration: InputDecoration(
-                                        labelText: 'Password',
-                                        labelStyle: TextStyle(
-                                            color:Colors.black
-                                        )
-                                    ),
-                                    validator: (value){
-                                      if(value!.isEmpty){
-                                        return 'Please Fill Password Input';
-                                      }
-                                    },
-                                  )
-                                ],
+                              height: 60,
+                              child: TextFormField(
+                                obscureText: true,
+                                controller: _passwordcontroller,
+                                keyboardType: TextInputType.visiblePassword,
+                                cursorColor: kPrimaryColor,
+                                decoration: InputDecoration(
+
+                                  contentPadding: EdgeInsets.only(top: 14),
+                                  prefixIcon: Icon(
+                                      Icons.lock, color: kPrimaryColor),
+                                  hintText: 'Password',
+                                  border: InputBorder.none,
+                                ),
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return 'Please Fill Password Input';
+                                  }
+                                },
                               ),
                             ),
                             SizedBox(height: 20,),
@@ -161,22 +190,45 @@ class _signup extends State<signup> {
                                     primary: Color(0xff2970A5),
                                     padding: EdgeInsets.all(6.0)),
                                 onPressed: () async {
-                                  FirebaseAuth.instance
-                                      .createUserWithEmailAndPassword(
-                                      email: _emailcontroller.text.trim(),
-                                      password: _passwordcontroller.text.trim())
-                                      .then((value) {
-                                    print("Created New Account");
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) => login()));
-                                  }).onError((error, stackTrace) {
-                                    print("Error ${error.toString()}");
-                                  });
-                                  Navigator.push(context, MaterialPageRoute(builder: (context){
-                                    return login();
-                                  }));
+                                    FirebaseAuth.instance
+                                        .createUserWithEmailAndPassword(
+                                        email: _emailcontroller.text.trim(),
+                                        password: _passwordcontroller.text
+                                            .trim())
+                                        .then((value) async {
+                                      User? user = FirebaseAuth.instance
+                                          .currentUser;
 
-                                },
+                                      await FirebaseFirestore.instance
+                                          .collection("users")
+                                          .doc(user?.uid)
+                                          .set({
+                                        'uid': user?.uid,
+                                        'name': _namecontroller.text,
+                                        'email': _emailcontroller.text,
+                                        'password': _passwordcontroller.text,
+                                      });
+                                      showTopSnackBar(
+                                        context,
+                                        CustomSnackBar.success(
+                                          message:
+                                          "Account created",
+                                        ),
+                                      );;
+                                      Navigator.push(context,
+                                          MaterialPageRoute(
+                                              builder: (context) => login()));
+                                    }).onError((error, stackTrace) {
+                                      showTopSnackBar(
+                                        context,
+                                        CustomSnackBar.error(
+                                          message:
+                                          "Error ${error.toString()}",
+                                        ),
+                                      );
+                                    });
+
+                                  },
                               ),
                             ),
                           ],

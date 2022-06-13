@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:protect/screens/heart_rate/widgets/Header.dart';
 import 'package:protect/screens/heart_rate/widgets/animated_heartbeat.dart';
 import 'package:protect/screens/heart_rate/widgets/animated_line_heartbeat.dart';
 import 'package:protect/screens/heart_rate/widgets/beats_per_minute.dart';
@@ -14,12 +15,7 @@ class _HeartRateState extends State<HeartRate> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: const BackButton(),
-        backgroundColor: Colors.orange,
-        title: const Text("HeartRate"),
-        centerTitle: true,
-      ),
+      appBar: header(context),
       body: Container(
         color: Colors.white,
         alignment: Alignment.center,
@@ -34,6 +30,9 @@ class _HeartRateState extends State<HeartRate> {
             ),
             Expanded(child: BeatsPerMinute()),
             Expanded(flex: 2, child: HeartLine()),
+            SizedBox(
+              height: 50,
+            )
           ],
         ),
       ),

@@ -1,9 +1,7 @@
 import 'dart:collection';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:protect/constants.dart';
-import 'package:location/location.dart';
+import 'package:protect/data/data_repo.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -11,59 +9,44 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  Set<Marker> markers = const <Marker>{};
 
-  var markers = HashSet<Marker>();
+  late GoogleMapController _controller;
 
   static const _initialCameraPosition = CameraPosition(
-    target: LatLng(33.886917, 9.537499),
+    target: LatLng(35.503372524565506, 11.045832345890663),
     zoom: 10,
   );
 
+  void goToLoyola(LatLng location) {
+    _controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+      target: location,
+      tilt: 50.0,
+      bearing: 45.0,
+      zoom: 10.0,
+    )));
+  }
 
   @override
-  Widget build(BuildContext context)
-  => Scaffold(
-    appBar: AppBar(
-      //title: Text('Home', style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold, fontSize: 15.0),),
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+  void initState() {
+    DataRepo().getPositionStream().listen((position) {
+      final marker = Marker(
+          markerId: MarkerId('1'), position: new LatLng(position.long, position.lat));
+      markers = HashSet<Marker>()..add(marker);
+      setState(() {
+        goToLoyola(new LatLng(position.long, position.lat));
+      });
+    });
+    super.initState();
+  }
 
-      bottom: PreferredSize(
-        preferredSize: Size.fromHeight(8),
-        child: Column(
-          children: [
-
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                decoration: InputDecoration(hintText: 'Search location',suffixIcon: Icon(Icons.search)),
-              ),
-            ),
-          ],
-        ),
-      ),
-      centerTitle: true,
-
-
-    ),
-
-
-    body: Stack(
-      children: [
-        GoogleMap(
-          //zoomControlsEnabled: false,
-          //myLocationButtonEnabled: false,
-          initialCameraPosition: _initialCameraPosition,
-          onMapCreated: (GoogleMapController googleMapController){
-            setState(() {
-              markers.add(Marker(markerId: MarkerId('1'),
-                  position: LatLng(33.886917, 9.537499),),);
-            });
-          },
-          markers: markers,
-        ),
-      ],
-    )
-   );
+  @override
+  Widget build(BuildContext context) => GoogleMap(
+        initialCameraPosition: _initialCameraPosition,
+        zoomControlsEnabled: false,
+        onMapCreated: (GoogleMapController googleMapController) {
+          _controller = googleMapController;
+        },
+        markers: markers,
+      );
 }
-
-

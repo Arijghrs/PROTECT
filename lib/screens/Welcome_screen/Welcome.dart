@@ -11,7 +11,16 @@ class WelcomePage extends StatelessWidget {
   Widget build(BuildContext context){
     return Scaffold(
       body: Container(
-        color: kPrimaryColor,
+        decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color(0xFF003973),
+                  Color(0xFFE5E5BE),
+                ]
+            )
+        ),
         child: Stack(
           children: [
             Positioned.fill(
@@ -104,9 +113,9 @@ class WelcomePage extends StatelessWidget {
                             ),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(50),
-                                color: Colors.transparent,
+                                color: Colors.white,
                                 border: Border.all(
-                                  color: Colors.orange.shade700,
+                                  color: Colors.white,
                                   width: 4,
                                 )
                             ),

@@ -33,13 +33,13 @@ class SplashScreen extends StatelessWidget {
             )
           ],
         ),
-        backgroundColor: kPrimaryColor,
         nextScreen: OnBoardingPage(),
       splashIconSize: 250,
       duration: 3000,
       splashTransition: SplashTransition.sizeTransition,
       pageTransitionType: PageTransitionType.leftToRightWithFade,
       animationDuration: const Duration(seconds: 1),
+      backgroundColor: kPrimaryColor,
 
     );
   }

@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:protect/constants.dart';
 import 'package:protect/screens/Edit_Profile/Edit.dart';
+import 'package:protect/screens/heart_rate/widgets/header3.dart';
 import 'package:protect/screens/settings/settings_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -12,37 +14,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          'profile',
-          style: TextStyle(
-            color: kPrimaryColor,
-          ),
-        ),
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        elevation: 1,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.indigo,
-          ),
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(
-              Icons.settings,
-              color: Colors.indigo,
-            ),
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => EditScreen()));
-            },
-          ),
-        ],
-      ),
+      appBar: header3(context),
       body: Container(
         padding: EdgeInsets.only(left: 16, top: 25, right: 16),
         child: ListView(
@@ -67,7 +39,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ],
                       shape: BoxShape.circle,
                       image: DecorationImage(
-                        image: AssetImage('assets/images/avatar.png')
+                        image: AssetImage('assets/images/profile.png')
                       )
                     ),
                   ),
@@ -83,11 +55,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           width: 4,
                           color: Theme.of(context).scaffoldBackgroundColor,
                         ),
-                        color: Colors.indigo
-                      ),
-                      child: Icon(
-                        Icons.edit,
-                        color: Colors.white,
+                        color: Colors.green
                       ),
                     ),
                   ),
@@ -97,19 +65,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             SizedBox(
               height: 35,
             ),
-            TextField(
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(bottom: 3),
-                labelText: "Full Name",
-                fillColor: Colors.indigo,
-                floatingLabelBehavior: FloatingLabelBehavior.always,
-                hintText: "Arij Gharsalli",
-                hintStyle: TextStyle(
-                  fontSize: 16, fontWeight: FontWeight.bold,
-                  color: Colors.black54,
-                )
-              ),
-            ),
+            Text(''),
             SizedBox(
               height: 35,
             ),
@@ -119,7 +75,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   labelText: "E-mail",
                   fillColor: Colors.indigo,
                   floatingLabelBehavior: FloatingLabelBehavior.always,
-                  hintText: "Arijgharsalli@gmail.com",
+                  hintText: "Write here",
                   hintStyle: TextStyle(
                     fontSize: 16, fontWeight: FontWeight.bold,
                     color: Colors.black54,
@@ -129,35 +85,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             SizedBox(
               height: 35,
             ),
-            TextField(
-              decoration: InputDecoration(
-                  contentPadding: EdgeInsets.only(bottom: 3),
-                  labelText: "Loation",
-                  fillColor: Colors.indigo,
-                  floatingLabelBehavior: FloatingLabelBehavior.always,
-                  hintText: "Tunisia",
-                  hintStyle: TextStyle(
-                    fontSize: 16, fontWeight: FontWeight.bold,
-                    color: Colors.black54,
-                  )
-              ),
-            ),
-            SizedBox(
-              height: 35,
-            ),
-            TextField(
-              decoration: InputDecoration(
-                  contentPadding: EdgeInsets.only(bottom: 3),
-                  labelText: "Phone Number",
-                  fillColor: Colors.indigo,
-                  floatingLabelBehavior: FloatingLabelBehavior.always,
-                  hintText: "98654224",
-                  hintStyle: TextStyle(
-                    fontSize: 16, fontWeight: FontWeight.bold,
-                    color: Colors.black54,
-                  )
-              ),
-            ),
+
+
           ],
         ),
       ),
